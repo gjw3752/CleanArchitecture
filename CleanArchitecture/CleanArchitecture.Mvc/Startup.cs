@@ -14,6 +14,7 @@ using CleanArchitecture.Mvc.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using CleanArchitecture.Infrastructure.Data.Context;
+using CleanArchitecture.IoC;
 
 namespace CleanArchitecture.Mvc
 {
@@ -51,6 +52,8 @@ namespace CleanArchitecture.Mvc
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            RegisterServices(services);
         }
 
 
@@ -87,6 +90,10 @@ namespace CleanArchitecture.Mvc
         }
 
 
+        private static void RegisterServices(IServiceCollection services)
+        {
+            DependencyContainer.RegisterServices(services);
+        }
 
 
     }
