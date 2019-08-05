@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using CleanArchitecture.Mvc.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using CleanArchitecture.Infrastructure.Data.Context;
 
 namespace CleanArchitecture.Mvc
 {
@@ -38,12 +39,23 @@ namespace CleanArchitecture.Mvc
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("UniversityIdentityDbConnection")));
+
+            services.AddDbContext<UniversityDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("UniversityDbConnection"));
+            });
+
+
             services.AddDefaultIdentity<IdentityUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
+
+
+
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -73,5 +85,9 @@ namespace CleanArchitecture.Mvc
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+
+
+
+
     }
 }
